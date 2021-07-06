@@ -1,0 +1,116 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Tables -->
+    <changeSet id="create-sequence-groups" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="squd_group_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="squd_group_id_seq" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="create-table-groups" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="groups"/>
+            </not>
+        </preConditions>
+
+        <!-- ТАБЛИЦА CARS -->
+        <createTable tableName="groups">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="group_id" type="BIGINT"/>
+            <column name="address" type="VARCHAR"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-sequence-barriers" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="squd_barrier_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="squd_barrier_id_seq" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="create-table-barriers" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="barriers"/>
+            </not>
+        </preConditions>
+
+        <!-- ТАБЛИЦА RFID_LABELS -->
+        <createTable tableName="barriers">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="device_id" type="BIGINT"/>
+            <column name="type" type="VARCHAR"/>
+            <column name="group_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-sequence-rfid_devices_id_seq" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="rfid_devices_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="rfid_devices_id_seq" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="create-table-rfid_devices" author="uber-dev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="rfid_devices"/>
+            </not>
+        </preConditions>
+
+        <!-- ТАБЛИЦА EVENTS -->
+        <createTable tableName="rfid_devices">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="device_id" type="BIGINT"/>
+            <column name="type" type="VARCHAR"/>
+            <column name="group_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Foreign keys & indexes -->
+<!--    <changeSet author="uber-dev" id="cars-createIndex">-->
+<!--        <createIndex indexName="idx_cars_rfid_label_id" tableName="cars">-->
+<!--            <column name="rfid_label_id"/>-->
+<!--        </createIndex>-->
+<!--        <comment>cars table create fk index</comment>-->
+<!--    </changeSet>-->
+
+    <changeSet author="uber-dev" id="create-foreign-key-barriers_group_id">
+        <addForeignKeyConstraint baseColumnNames="group_id"
+                                 baseTableName="barriers"
+                                 constraintName="barriers_group_id_fk"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="groups"/>
+    </changeSet>
+
+
+    <changeSet author="uber-dev" id="create-foreign-key-rfid_group_id">
+        <addForeignKeyConstraint baseColumnNames="group_id"
+                                 baseTableName="rfid_devices"
+                                 constraintName="rfid_devices_group_id_fk"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="groups"/>
+    </changeSet>
+
+</databaseChangeLog>
