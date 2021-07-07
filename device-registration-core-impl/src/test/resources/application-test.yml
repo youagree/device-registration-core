@@ -1,0 +1,19 @@
+spring:
+  logging:
+    level:
+      ROOT: DEBUG
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:unit_techno\MODE=PostgreSQL;\INIT=CREATE SCHEMA IF NOT EXISTS device_registration_service\;SET SCHEMA device_registration_service;
+    username: device_registration_admin
+    password: squd
+
+  liquibase:
+    enabled: true
+    change-log: classpath:database_changelog.xml
+    drop-first: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
