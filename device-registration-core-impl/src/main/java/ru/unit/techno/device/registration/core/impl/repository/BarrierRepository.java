@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 
 public interface BarrierRepository extends JpaRepository<BarrierEntity, Long> {
+
+    BarrierEntity findByDeviceId(Long deviceId);
 }
