@@ -1,9 +1,9 @@
 package ru.unit.techno.device.registration.core.impl.service;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import ru.unit.techno.device.registration.core.impl.dto.DeviceDto;
 import ru.unit.techno.device.registration.core.impl.dto.RegistrationDto;
@@ -15,7 +15,6 @@ import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository
 import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
 import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
@@ -28,6 +27,7 @@ public class RegistrationService {
     private final RfidDevicesRepository rfidDevicesRepository;
     private final BarrierRepository barrierRepository;
 
+    @Transactional
     public Long registerGroup(RegistrationDto registrationDto) {
         GroupsEntity groupsEntity;
         //TODO Проверить были ли регистрирующиеся устройства в какой либо группе
@@ -53,12 +53,12 @@ public class RegistrationService {
     private Long generateRandomGroupId() {
         Random random = new Random();
         long id = random.nextLong();
-
-        if (groupsRepository.isGroupExist(id)) {
-            return generateRandomGroupId();
-        } else {
-            return id;
-        }
+// TODO: 08.07.2021
+//        if (groupsRepository.isGroupExist(id)) {
+//            return generateRandomGroupId();
+//        } else {
+        return id;
+//        }
     }
 
     private void parseRegistrationRequestAndSaveDevices(List<DeviceDto> devices, GroupsEntity groupId) {

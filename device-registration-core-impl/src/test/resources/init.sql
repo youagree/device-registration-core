@@ -1,6 +1,6 @@
 -- create database
 
-CREATE DATABASE unit_techno;
+-- CREATE DATABASE unit_techno;
 
 -- \c unit_techno
 

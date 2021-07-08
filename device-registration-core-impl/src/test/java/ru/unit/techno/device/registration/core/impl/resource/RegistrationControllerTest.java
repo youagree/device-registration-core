@@ -30,7 +30,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void successRegistrationTest() {
         var input = buildRegisterDto();
 
-        Long groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
         assertEquals(all.size(), 1);
