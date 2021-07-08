@@ -42,7 +42,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         assertEquals(barrierEntity.getDeviceId(), 2L);
 
         RfidDeviceEntity rfidEntity = rfidDevicesRepository.findByGroup_GroupId(groupId);
-        assertEquals(rfidEntity.getDeviceId(), 2L);
+        assertEquals(rfidEntity.getDeviceId(), 1L);
 
         assertEquals(groupIdFromBody, groupsEntity.getGroupId());
     }
