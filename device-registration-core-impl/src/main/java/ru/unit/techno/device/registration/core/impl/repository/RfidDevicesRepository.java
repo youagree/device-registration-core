@@ -6,4 +6,6 @@ import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
 public interface RfidDevicesRepository extends JpaRepository<RfidDeviceEntity, Long> {
 
     RfidDeviceEntity findByDeviceId(Long deviceId);
+
+    RfidDeviceEntity findByGroup_GroupId(Long id);
 }

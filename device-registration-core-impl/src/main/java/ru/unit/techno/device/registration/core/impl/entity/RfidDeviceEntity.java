@@ -18,6 +18,7 @@ public class RfidDeviceEntity {
     @Column(name = "device_id")
     private Long deviceId;
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private DeviceType type;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

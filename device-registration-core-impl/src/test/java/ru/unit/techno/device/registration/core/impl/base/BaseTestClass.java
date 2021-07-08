@@ -3,13 +3,10 @@ package ru.unit.techno.device.registration.core.impl.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-
-import java.util.Objects;
+import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
+import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
+import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
 
 @Slf4j
 @IntegrationTest
@@ -21,11 +18,12 @@ public class BaseTestClass {
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
-    @BeforeTestClass
-    private void init() {
-        Resource resource = new ClassPathResource("init-test.sql");
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(resource);
-        resourceDatabasePopulator.execute(Objects.requireNonNull(jdbcTemplate.getDataSource()));
-        log.info("Start data uploaded!");
-    }
+    @Autowired
+    protected BarrierRepository barrierRepository;
+
+    @Autowired
+    protected GroupsRepository groupsRepository;
+
+    @Autowired
+    protected RfidDevicesRepository rfidDevicesRepository;
 }

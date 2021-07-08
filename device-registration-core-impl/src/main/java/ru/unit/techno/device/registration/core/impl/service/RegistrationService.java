@@ -1,5 +1,6 @@
 package ru.unit.techno.device.registration.core.impl.service;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
