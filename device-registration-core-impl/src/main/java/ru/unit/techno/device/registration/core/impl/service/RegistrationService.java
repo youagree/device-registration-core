@@ -33,8 +33,13 @@ public class RegistrationService {
         //TODO Проверить были ли регистрирующиеся устройства в какой либо группе
 
         if (registrationDto.getGroup() == null) {
-            groupsEntity = new GroupsEntity();
-            groupsEntity.setGroupId(generateRandomGroupId());
+            Long existedGroup = findRegisteredDevices(registrationDto.getGroups());
+            if (existedGroup != null) {
+                groupsEntity = groupsRepository.findByGroupId(existedGroup);
+            } else {
+                groupsEntity = new GroupsEntity();
+                groupsEntity.setGroupId(generateRandomGroupId());
+            }
         } else {
             groupsEntity = groupsRepository.findByGroupId(registrationDto.getGroup());
         }
@@ -49,6 +54,33 @@ public class RegistrationService {
         }
 
         return groupsEntity.getGroupId();
+    }
+
+    private Long findRegisteredDevices(List<DeviceDto> devices) {
+        Long groupId = null;
+
+        for (DeviceDto dev : devices) {
+            switch (dev.getType()) {
+                case ("RFID"):
+                    RfidDeviceEntity existRfid = rfidDevicesRepository.findByDeviceId(dev.getId());
+                    if (existRfid != null) {
+                        groupId = existRfid.getGroup().getGroupId();
+                        return groupId;
+                    }
+                    break;
+
+                case ("ENTRY"):
+                    BarrierEntity existBarrier = barrierRepository.findByDeviceId(dev.getId());
+
+                    if (existBarrier != null) {
+                        groupId = existBarrier.getGroup().getGroupId();
+                        return groupId;
+                    }
+                    break;
+            }
+        }
+
+        return groupId;
     }
 
     private Long generateRandomGroupId() {

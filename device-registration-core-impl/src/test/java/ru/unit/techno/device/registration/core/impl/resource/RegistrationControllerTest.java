@@ -3,10 +3,14 @@ package ru.unit.techno.device.registration.core.impl.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import ru.unit.techno.device.registration.core.impl.base.BaseTestClass;
 import ru.unit.techno.device.registration.core.impl.dto.DeviceDto;
 import ru.unit.techno.device.registration.core.impl.dto.RegistrationDto;
@@ -42,7 +46,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         assertEquals(barrierEntity.getDeviceId(), 2L);
 
         RfidDeviceEntity rfidEntity = rfidDevicesRepository.findByGroup_GroupId(groupId);
-        assertEquals(rfidEntity.getDeviceId(), 2L);
+        assertEquals(rfidEntity.getDeviceId(), 1L);
 
         assertEquals(groupIdFromBody, groupsEntity.getGroupId());
     }
@@ -82,6 +86,46 @@ public class RegistrationControllerTest extends BaseTestClass {
         assertEquals(first, 3L);
 
         assertEquals(listBarriers.size(), 2);
+    }
+
+    @Test
+    @DisplayName("тест на регистрацию группы, при условии, что такая группа уже зарегистрирована")
+    public void registrationWithExistedGroupAfterCoreCrashTest() {
+        var input = buildRegisterDtoTwoDevices();
+
+        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+
+        List<GroupsEntity> all = groupsRepository.findAll();
+        assertEquals(all.size(), 1);
+
+        GroupsEntity groupsEntity = all.get(0);
+        var groupId = groupsEntity.getGroupId();
+
+        BarrierEntity barrierEntity = barrierRepository.findByGroup_GroupId(groupId);
+        assertEquals(barrierEntity.getDeviceId(), 2L);
+
+        RfidDeviceEntity rfidEntity = rfidDevicesRepository.findByGroup_GroupId(groupId);
+        assertEquals(rfidEntity.getDeviceId(), 1L);
+
+        assertEquals(groupIdFromBody, groupsEntity.getGroupId());
+
+        //пушим с новым устройством
+        var inputThreeDevice = buildRegisterDtoThreeDevices();
+
+        var groupIdFromRetry = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
+
+        List<GroupsEntity> afterRetry = groupsRepository.findAll();
+        assertEquals(afterRetry.size(), 1);
+
+        var listBarriers = barrierRepository.findAllByGroup_GroupId(groupIdFromRetry);
+        var first = listBarriers.stream().filter(barrierEntity1 -> barrierEntity1.getDeviceId() == 3L).findFirst()
+                .map(BarrierEntity::getDeviceId).get();
+
+        var listRfids = rfidDevicesRepository.findAllByGroup_GroupId(groupIdFromRetry);
+        assertEquals(first, 3L);
+        assertEquals(groupIdFromRetry, groupIdFromBody);
+        assertEquals(listBarriers.size(), 2);
+        assertEquals(listRfids.size(), 1);
     }
 
     private RegistrationDto buildRegisterDtoTwoDevices() {

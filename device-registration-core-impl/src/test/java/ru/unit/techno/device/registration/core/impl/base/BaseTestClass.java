@@ -2,6 +2,8 @@
 package ru.unit.techno.device.registration.core.impl.base;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.BindMode;
@@ -40,5 +42,12 @@ public class BaseTestClass {
 
     static {
         postgresDB.start();
+    }
+
+    @AfterEach
+    public void destroy() {
+        barrierRepository.deleteAll();
+        rfidDevicesRepository.deleteAll();
+        groupsRepository.deleteAll();
     }
 }
