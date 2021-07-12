@@ -28,7 +28,29 @@ public class RegistrationControllerTest extends BaseTestClass {
     @Test
     @DisplayName("когда устройства зарегались успешно")
     public void successRegistrationTest() {
-        var input = buildRegisterDto();
+        var input = buildRegisterDtoTwoDevices();
+
+        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+
+        List<GroupsEntity> all = groupsRepository.findAll();
+        assertEquals(all.size(), 1);
+
+        GroupsEntity groupsEntity = all.get(0);
+        var groupId = groupsEntity.getGroupId();
+
+        BarrierEntity barrierEntity = barrierRepository.findByGroup_GroupId(groupId);
+        assertEquals(barrierEntity.getDeviceId(), 2L);
+
+        RfidDeviceEntity rfidEntity = rfidDevicesRepository.findByGroup_GroupId(groupId);
+        assertEquals(rfidEntity.getDeviceId(), 2L);
+
+        assertEquals(groupIdFromBody, groupsEntity.getGroupId());
+    }
+
+    @Test
+    @DisplayName("написать тест, на регистрацию нового устройства, которого ранее не было в группе, сначала регаются 3, потом через время приходят 4, одно новое")
+    public void retryRegistrationTest() {
+        var input = buildRegisterDtoTwoDevices();
 
         var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
@@ -45,9 +67,24 @@ public class RegistrationControllerTest extends BaseTestClass {
         assertEquals(rfidEntity.getDeviceId(), 1L);
 
         assertEquals(groupIdFromBody, groupsEntity.getGroupId());
+
+        //пушим с новым устройством
+        var inputThreeDevice = buildRegisterDtoThreeDevices().setGroup(groupIdFromBody);
+
+        var groupIdFromRetry = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
+
+        List<GroupsEntity> afterRetry = groupsRepository.findAll();
+        assertEquals(afterRetry.size(), 1);
+
+        var listBarriers = barrierRepository.findAllByGroup_GroupId(groupIdFromRetry);
+        var first = listBarriers.stream().filter(barrierEntity1 -> barrierEntity1.getDeviceId() == 3L).findFirst()
+                .map(BarrierEntity::getDeviceId).get();
+        assertEquals(first, 3L);
+
+        assertEquals(listBarriers.size(), 2);
     }
 
-    private RegistrationDto buildRegisterDto() {
+    private RegistrationDto buildRegisterDtoTwoDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
                 .setGroup(null)
@@ -56,6 +93,21 @@ public class RegistrationControllerTest extends BaseTestClass {
                                 .setType("RFID"),
                         new DeviceDto()
                                 .setId(2L)
+                                .setType("ENTRY")));
+    }
+
+    private RegistrationDto buildRegisterDtoThreeDevices() {
+        return new RegistrationDto()
+                .setAddress("127.0.0.1")
+                .setGroup(null)
+                .setGroups(List.of(new DeviceDto()
+                                .setId(1L)
+                                .setType("RFID"),
+                        new DeviceDto()
+                                .setId(2L)
+                                .setType("ENTRY"),
+                        new DeviceDto()
+                                .setId(3L)
                                 .setType("ENTRY")));
     }
 }

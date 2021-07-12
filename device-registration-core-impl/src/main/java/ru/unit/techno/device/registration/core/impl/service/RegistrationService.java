@@ -73,13 +73,8 @@ public class RegistrationService {
                                 .setGroup(groupId)
                                 .setType(DeviceType.RFID);
                         rfidDevicesRepository.save(rfidEntity);
-                    } else {
-                        RfidDeviceEntity existedRfidDevice = rfidDevicesRepository.findByDeviceId(deviceDto.getId());
-                        existedRfidDevice.setGroup(groupId);
-                        rfidDevicesRepository.save(existedRfidDevice);
                     }
                     break;
-
                 case ("ENTRY"):
                     if (!checkBarrierDevice(deviceDto.getId())) {
                         BarrierEntity barrierEntity = new BarrierEntity();
@@ -87,10 +82,6 @@ public class RegistrationService {
                                 .setGroup(groupId)
                                 .setType(DeviceType.RFID);
                         barrierRepository.save(barrierEntity);
-                    } else {
-                        BarrierEntity existedRfidDevice = barrierRepository.findByDeviceId(deviceDto.getId());
-                        existedRfidDevice.setGroup(groupId);
-                        barrierRepository.save(existedRfidDevice);
                     }
                     break;
             }
@@ -103,7 +94,6 @@ public class RegistrationService {
             log.info("This device is already registered in service");
             return true;
         }
-
         return false;
     }
 
