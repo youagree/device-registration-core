@@ -25,3 +25,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/unit_techno?currentSchema=device_registration_service
     username: device_registration_admin
     password: squd
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    instance:
+      preferIpAddress: true
