@@ -13,7 +13,7 @@ import ru.unit.techno.device.registration.core.impl.service.RegistrationService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/${spring.application.name}/api")
+@RequestMapping("/api")
 public class RegistrationController {
 
     private final RegistrationService registrationService;

@@ -11,6 +11,9 @@ spring:
       text_array_type: ARRAY
     change-log: classpath:database_changelog.xml
     drop-first: true
+  cloud:
+    discovery:
+      enabled: false
 
 logging:
   level:
