@@ -1,4 +1,4 @@
-package ru.unit.techno.device.registration.core.impl.dto;
+package ru.unit.techno.device.registration.api.dto;
 
 import lombok.Data;
 

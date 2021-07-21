@@ -3,17 +3,13 @@ package ru.unit.techno.device.registration.core.impl.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
+import ru.unit.techno.device.registration.api.dto.DeviceDto;
+import ru.unit.techno.device.registration.api.dto.RegistrationDto;
 import ru.unit.techno.device.registration.core.impl.base.BaseTestClass;
-import ru.unit.techno.device.registration.core.impl.dto.DeviceDto;
-import ru.unit.techno.device.registration.core.impl.dto.RegistrationDto;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
 import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;

@@ -45,7 +45,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
-
         <dependency>
             <groupId>ru.unit.techno.device.registration.service</groupId>
             <artifactId>device-registration-api</artifactId>
