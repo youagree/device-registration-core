@@ -1,7 +1,7 @@
 package ru.unit.techno.device.registration.core.impl.entity;
 
 import lombok.Data;
-import ru.unit.techno.device.registration.core.impl.entity.enums.DeviceType;
+import ru.unit.techno.device.registration.api.enums.DeviceType;
 
 import javax.persistence.*;
 

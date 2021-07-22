@@ -10,7 +10,7 @@ import ru.unit.techno.device.registration.api.dto.RegistrationDto;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
 import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
-import ru.unit.techno.device.registration.core.impl.entity.enums.DeviceType;
+import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
 import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
 import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;

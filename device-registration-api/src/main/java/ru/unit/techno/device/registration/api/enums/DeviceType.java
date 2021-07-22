@@ -1,4 +1,4 @@
-package ru.unit.techno.device.registration.core.impl.entity.enums;
+package ru.unit.techno.device.registration.api.enums;
 
 import lombok.Getter;
 

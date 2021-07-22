@@ -16,8 +16,8 @@ public class DeviceService {
     private final RfidDevicesRepository rfidDevicesRepository;
     private final BarrierRepository barrierRepository;
 
-    public DeviceResponseDto getGroupDevices(DeviceRequestDto request) {
-        RfidDeviceEntity rfidDevice = rfidDevicesRepository.findByDeviceId(request.getDeviceId());
+    public DeviceResponseDto getGroupDevices(Long deviceId) {
+        RfidDeviceEntity rfidDevice = rfidDevicesRepository.findByDeviceId(deviceId);
 
         if (rfidDevice != null) {
             Long groupId = rfidDevice.getGroup().getGroupId();
