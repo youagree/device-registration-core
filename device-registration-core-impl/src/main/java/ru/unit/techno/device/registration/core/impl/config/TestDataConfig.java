@@ -30,15 +30,20 @@ public class TestDataConfig {
     @Bean
     @Transactional
     public void createTestGroup() {
+        rfidDevicesRepository.deleteAll();
+        barrierRepository.deleteAll();
+        groupsRepository.deleteAll();
+
         var group = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("test-address")
                         .setGroupId(1L)
 
         );
+
         barrierRepository.save(new BarrierEntity()
                 .setGroup(group)
-                .setDeviceId(2345L)
+                .setDeviceId(3456L)
                 .setType(DeviceType.ENTRY));
 
         rfidDevicesRepository.save(
