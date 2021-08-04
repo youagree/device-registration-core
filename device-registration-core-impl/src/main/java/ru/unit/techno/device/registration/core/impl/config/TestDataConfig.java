@@ -4,6 +4,7 @@ package ru.unit.techno.device.registration.core.impl.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
@@ -18,7 +19,7 @@ import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesReposi
  *
  * @author Aleksey_Vasin
  */
-//@Profile("local")
+@Profile("!test")
 @Configuration
 @RequiredArgsConstructor
 public class TestDataConfig {
@@ -30,20 +31,15 @@ public class TestDataConfig {
     @Bean
     @Transactional
     public void createTestGroup() {
-        rfidDevicesRepository.deleteAll();
-        barrierRepository.deleteAll();
-        groupsRepository.deleteAll();
-
         var group = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("test-address")
                         .setGroupId(1L)
 
         );
-
         barrierRepository.save(new BarrierEntity()
                 .setGroup(group)
-                .setDeviceId(3456L)
+                .setDeviceId(2345L)
                 .setType(DeviceType.ENTRY));
 
         rfidDevicesRepository.save(
@@ -53,5 +49,4 @@ public class TestDataConfig {
                         .setType(DeviceType.RFID)
         );
     }
-
 }

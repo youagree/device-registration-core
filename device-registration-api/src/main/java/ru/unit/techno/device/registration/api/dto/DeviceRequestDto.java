@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class DeviceRequestDto {
-
     private Long deviceId;
     private String type;
 }
