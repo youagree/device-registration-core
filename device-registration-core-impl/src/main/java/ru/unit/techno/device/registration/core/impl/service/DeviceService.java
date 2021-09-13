@@ -7,12 +7,16 @@ import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
 import ru.unit.techno.device.registration.api.dto.GroupDto;
 import ru.unit.techno.device.registration.api.dto.GroupsDto;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
+import ru.unit.techno.device.registration.core.impl.entity.CardEntity;
 import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
+import ru.unit.techno.device.registration.core.impl.entity.QrEntity;
 import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
 import ru.unit.techno.device.registration.core.impl.mapper.DeviceInfoDtoMapper;
 import ru.unit.techno.device.registration.core.impl.mapper.GroupsDtoMapper;
 import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
+import ru.unit.techno.device.registration.core.impl.repository.CardRepository;
 import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
+import ru.unit.techno.device.registration.core.impl.repository.QrRepository;
 import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
 
 import java.util.ArrayList;
@@ -23,9 +27,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeviceService {
 
-    private GroupsRepository groupsRepository;
+    private final GroupsRepository groupsRepository;
     private final RfidDevicesRepository rfidDevicesRepository;
     private final BarrierRepository barrierRepository;
+    private final CardRepository cardRepository;
+    private final QrRepository qrRepository;
+
     private final GroupsDtoMapper groupsDtoMapper;
     private final DeviceInfoDtoMapper deviceInfoDtoMapper;
 
@@ -50,12 +57,15 @@ public class DeviceService {
         List<GroupDto> groupDtos = groupsDtoMapper.toDto(allGroups);
 
         groupDtos.forEach(groupDto -> {
-            List<DeviceInfoDto> deviceInfoDtoList = new ArrayList<>();
             BarrierEntity attachedBarrier = barrierRepository.findByGroup_GroupId(groupDto.getId());
             RfidDeviceEntity attachedRfid = rfidDevicesRepository.findByGroup_GroupId(groupDto.getId());
+            CardEntity cardEntity = cardRepository.findByGroup_GroupId(groupDto.getId());
+            QrEntity qrEntity = qrRepository.findByGroup_GroupId(groupDto.getId());
+
             List<DeviceInfoDto> attachedDevices =
-                    Arrays.asList(deviceInfoDtoMapper.toDto(attachedBarrier), deviceInfoDtoMapper.toDto(attachedRfid));
-            deviceInfoDtoList.addAll(attachedDevices);
+                    Arrays.asList(deviceInfoDtoMapper.toDto(attachedBarrier), deviceInfoDtoMapper.toDto(attachedRfid),
+                            deviceInfoDtoMapper.toDto(cardEntity), deviceInfoDtoMapper.toDto(qrEntity));
+            List<DeviceInfoDto> deviceInfoDtoList = new ArrayList<>(attachedDevices);
             groupDto.setDeviceInfoDtoList(deviceInfoDtoList);
         });
         return new GroupsDto().setGroupDtoList(groupDtos);

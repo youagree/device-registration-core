@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum DeviceType {
-    ENTRY("ENTRY"), RFID("RFID"), QR("QR");
+    ENTRY("ENTRY"), RFID("RFID"), QR("QR"), CARD("CARD");
 
     @Getter
-    private String value;
+    private final String value;
 
     DeviceType(String value) {
         this.value = value;
