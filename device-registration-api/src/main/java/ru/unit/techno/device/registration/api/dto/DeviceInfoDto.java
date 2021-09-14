@@ -9,5 +9,6 @@ import ru.unit.techno.device.registration.api.enums.DeviceType;
 public class DeviceInfoDto {
     private Long id;
     private Long deviceId;
+    private String address;
     private DeviceType type;
 }
