@@ -76,6 +76,13 @@ public class TestDataConfig {
                         .setGroupId(2L)
         );
 
+//        var group2 = groupsRepository.save(
+//                new GroupsEntity()
+//                        .setAddress("test-address-out")
+//                        .setGroupId(2L)
+//
+//        );
+
         barrierRepository.save(new BarrierEntity()
                 .setGroup(group2)
                 .setDeviceId(9853L)
@@ -135,6 +142,18 @@ public class TestDataConfig {
                         .setGroup(group3)
                         .setDeviceId(7362L)
                         .setType(DeviceType.CARD)
+        );
+
+        barrierRepository.save(new BarrierEntity()
+                .setGroup(group2)
+                .setDeviceId(7777L)
+                .setType(DeviceType.ENTRY));
+
+        rfidDevicesRepository.save(
+                new RfidDeviceEntity()
+                        .setGroup(group2)
+                        .setDeviceId(4334L)
+                        .setType(DeviceType.RFID)
         );
     }
 }

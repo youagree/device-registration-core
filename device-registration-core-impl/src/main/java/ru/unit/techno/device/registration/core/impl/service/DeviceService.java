@@ -6,6 +6,7 @@ import ru.unit.techno.device.registration.api.dto.DeviceInfoDto;
 import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
 import ru.unit.techno.device.registration.api.dto.GroupDto;
 import ru.unit.techno.device.registration.api.dto.GroupsDto;
+import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 import ru.unit.techno.device.registration.core.impl.entity.CardEntity;
 import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
@@ -36,11 +37,20 @@ public class DeviceService {
     private final GroupsDtoMapper groupsDtoMapper;
     private final DeviceInfoDtoMapper deviceInfoDtoMapper;
 
-    public DeviceResponseDto getGroupDevices(Long deviceId) {
-        RfidDeviceEntity rfidDevice = rfidDevicesRepository.findByDeviceId(deviceId);
+    public DeviceResponseDto getGroupDevices(Long deviceId, DeviceType deviceType) {
+        Long groupId = null;
 
-        if (rfidDevice != null) {
-            Long groupId = rfidDevice.getGroup().getGroupId();
+        switch (deviceType){
+            case QR:
+                groupId = qrRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+            case RFID:
+                groupId = rfidDevicesRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+        }
+
+        if (groupId != null) {
+            //todo barrier inside group
             BarrierEntity groupBarrier = barrierRepository.findByGroup_GroupId(groupId);
             return new DeviceResponseDto()
                     .setDeviceId(groupBarrier.getDeviceId())
