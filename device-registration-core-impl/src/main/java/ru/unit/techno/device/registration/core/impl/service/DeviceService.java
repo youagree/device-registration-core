@@ -47,6 +47,8 @@ public class DeviceService {
             case RFID:
                 groupId = rfidDevicesRepository.findByDeviceId(deviceId).getGroup().getGroupId();
                 break;
+            case CARD:
+                groupId = cardRepository.findByDeviceId(deviceId).getGroup().getGroupId();
         }
 
         if (groupId != null) {
