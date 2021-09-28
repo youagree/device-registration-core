@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RegistrationControllerTest extends BaseTestClass {
 
-    public static final String BASE_URL = "/device-registration-core/api";
+    public static final String BASE_URL = "/api";
     public static final String REGISTER = "/registration";
 
     @Autowired
