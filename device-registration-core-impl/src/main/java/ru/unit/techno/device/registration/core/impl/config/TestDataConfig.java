@@ -30,9 +30,17 @@ public class TestDataConfig {
     private final CardRepository cardRepository;
 
     @Bean
+    @Profile("local")
     @Transactional
     //hardcode real devices
     public void createTestGroup() {
+        rfidDevicesRepository.deleteAll();
+        barrierRepository.deleteAll();
+        qrRepository.deleteAll();
+        cardRepository.deleteAll();
+        groupsRepository.deleteAll();
+
+
         //group 1 https://my-atlassian-site-430.atlassian.net/wiki/spaces/CRIMEAIT/pages/88997889/REGISTRATION+MAP
         var group1 = groupsRepository.save(
                 new GroupsEntity()
@@ -75,13 +83,6 @@ public class TestDataConfig {
                         .setAddress("unknown")
                         .setGroupId(2L)
         );
-
-//        var group2 = groupsRepository.save(
-//                new GroupsEntity()
-//                        .setAddress("test-address-out")
-//                        .setGroupId(2L)
-//
-//        );
 
         barrierRepository.save(new BarrierEntity()
                 .setGroup(group2)
