@@ -2,6 +2,7 @@ package ru.unit.techno.device.registration.core.impl.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.unit.techno.device.registration.api.dto.DeviceInfoDto;
 import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
 import ru.unit.techno.device.registration.api.dto.GroupDto;
@@ -37,6 +38,7 @@ public class DeviceService {
     private final GroupsDtoMapper groupsDtoMapper;
     private final DeviceInfoDtoMapper deviceInfoDtoMapper;
 
+    @Transactional
     public DeviceResponseDto getGroupDevices(Long deviceId, DeviceType deviceType) {
         Long groupId = null;
 
@@ -63,7 +65,8 @@ public class DeviceService {
         return null;
     }
 
-    // TODO: 03.08.2021 покрыть тестами 
+    // TODO: 03.08.2021 покрыть тестами
+    @Transactional
     public GroupsDto getAllGroupsWithDevices() {
         List<GroupsEntity> allGroups = groupsRepository.findAll();
         List<GroupDto> groupDtos = groupsDtoMapper.toDto(allGroups);
