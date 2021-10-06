@@ -3,18 +3,21 @@ package ru.unit.techno.device.registration.core.impl.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import ru.unit.techno.device.registration.api.dto.DeviceDto;
 import ru.unit.techno.device.registration.api.dto.RegistrationDto;
+import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.base.BaseTestClass;
-import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
-import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
-import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
+import ru.unit.techno.device.registration.core.impl.entity.*;
 import ru.unit.techno.device.registration.core.impl.service.RegistrationService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class RegistrationControllerTest extends BaseTestClass {
@@ -122,6 +125,29 @@ public class RegistrationControllerTest extends BaseTestClass {
         assertEquals(groupIdFromRetry, groupIdFromBody);
         assertEquals(listBarriers.size(), 2);
         assertEquals(listRfids.size(), 1);
+    }
+
+    @Test
+    public void registerTwoIdentityDevices(){
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            barrierRepository.save(new BarrierEntity().setDeviceId(123L).setType(DeviceType.ENTRY));
+            barrierRepository.save(new BarrierEntity().setDeviceId(123L).setType(DeviceType.ENTRY));
+        });
+
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(123L).setType(DeviceType.RFID));
+            rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(123L).setType(DeviceType.RFID));
+        });
+
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            qrRepository.save(new QrEntity().setDeviceId(123L).setType(DeviceType.QR));
+            qrRepository.save(new QrEntity().setDeviceId(123L).setType(DeviceType.QR));
+        });
+
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            cardRepository.save(new CardEntity().setDeviceId(123L).setType(DeviceType.CARD));
+            cardRepository.save(new CardEntity().setDeviceId(123L).setType(DeviceType.CARD));
+        });
     }
 
     private RegistrationDto buildRegisterDtoTwoDevices() {

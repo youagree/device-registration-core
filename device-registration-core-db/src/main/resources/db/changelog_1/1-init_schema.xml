@@ -50,7 +50,9 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="device_id" type="BIGINT"/>
+            <column name="device_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
             <column name="type" type="VARCHAR"/>
             <column name="group_id" type="BIGINT"/>
         </createTable>
@@ -76,7 +78,9 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="device_id" type="BIGINT"/>
+            <column name="device_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
             <column name="type" type="VARCHAR"/>
             <column name="group_id" type="BIGINT"/>
         </createTable>
@@ -102,7 +106,9 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="device_id" type="BIGINT"/>
+            <column name="device_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
             <column name="type" type="VARCHAR"/>
             <column name="group_id" type="BIGINT"/>
         </createTable>
@@ -128,7 +134,9 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="device_id" type="BIGINT"/>
+            <column name="device_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
             <column name="type" type="VARCHAR"/>
             <column name="group_id" type="BIGINT"/>
         </createTable>

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
-import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
-import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
+import ru.unit.techno.device.registration.core.impl.repository.*;
 
 @Slf4j
 @IntegrationTest
@@ -26,6 +24,12 @@ public class BaseTestClass {
 
     @Autowired
     protected GroupsRepository groupsRepository;
+
+    @Autowired
+    protected QrRepository qrRepository;
+
+    @Autowired
+    protected CardRepository cardRepository;
 
     @Autowired
     protected RfidDevicesRepository rfidDevicesRepository;
