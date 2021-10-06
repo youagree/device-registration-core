@@ -2,7 +2,6 @@
 package ru.unit.techno.device.registration.core.impl.base;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

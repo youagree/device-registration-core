@@ -65,17 +65,16 @@ public class DeviceService {
         return null;
     }
 
-    // TODO: 03.08.2021 покрыть тестами
     @Transactional
     public GroupsDto getAllGroupsWithDevices() {
         List<GroupsEntity> allGroups = groupsRepository.findAll();
         List<GroupDto> groupDtos = groupsDtoMapper.toDto(allGroups);
 
         groupDtos.forEach(groupDto -> {
-            BarrierEntity attachedBarrier = barrierRepository.findByGroup_GroupId(groupDto.getId());
-            RfidDeviceEntity attachedRfid = rfidDevicesRepository.findByGroup_GroupId(groupDto.getId());
-            CardEntity cardEntity = cardRepository.findByGroup_GroupId(groupDto.getId());
-            QrEntity qrEntity = qrRepository.findByGroup_GroupId(groupDto.getId());
+            BarrierEntity attachedBarrier = barrierRepository.findByGroup_GroupId(groupDto.getGroupId());
+            RfidDeviceEntity attachedRfid = rfidDevicesRepository.findByGroup_GroupId(groupDto.getGroupId());
+            CardEntity cardEntity = cardRepository.findByGroup_GroupId(groupDto.getGroupId());
+            QrEntity qrEntity = qrRepository.findByGroup_GroupId(groupDto.getGroupId());
 
             List<DeviceInfoDto> attachedDevices =
                     Arrays.asList(deviceInfoDtoMapper.toDto(attachedBarrier), deviceInfoDtoMapper.toDto(attachedRfid),

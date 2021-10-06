@@ -10,7 +10,7 @@ import ru.unit.techno.device.registration.core.impl.service.DeviceService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("ui/device")
+@RequestMapping("/ui/device")
 public class GetDeviceResource {
 
     private final DeviceService deviceService;
