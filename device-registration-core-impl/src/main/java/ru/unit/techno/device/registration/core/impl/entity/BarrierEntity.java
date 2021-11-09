@@ -3,7 +3,18 @@ package ru.unit.techno.device.registration.core.impl.entity;
 import lombok.Data;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -20,7 +31,6 @@ public class BarrierEntity {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private DeviceType type;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private GroupsEntity group;

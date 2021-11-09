@@ -30,7 +30,7 @@ public class TestDataConfig {
     private final CardRepository cardRepository;
 
     @Bean
-    @Profile("local")
+    @Profile("!test")
     @Transactional
     //hardcode real devices
     public void createTestGroup() {
