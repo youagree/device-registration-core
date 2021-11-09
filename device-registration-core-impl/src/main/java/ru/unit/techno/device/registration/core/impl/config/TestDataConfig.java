@@ -18,6 +18,8 @@ import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
 import ru.unit.techno.device.registration.core.impl.repository.QrRepository;
 import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
 
+import javax.persistence.EntityManager;
+
 @Profile("!test")
 @Configuration
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class TestDataConfig {
     private final BarrierRepository barrierRepository;
     private final QrRepository qrRepository;
     private final CardRepository cardRepository;
+    private final EntityManager entityManager;
 
     @Bean
     @Profile("!test")
@@ -39,6 +42,7 @@ public class TestDataConfig {
         qrRepository.deleteAll();
         cardRepository.deleteAll();
         groupsRepository.deleteAll();
+        entityManager.flush();
 
 
         //group 1 https://my-atlassian-site-430.atlassian.net/wiki/spaces/CRIMEAIT/pages/88997889/REGISTRATION+MAP
