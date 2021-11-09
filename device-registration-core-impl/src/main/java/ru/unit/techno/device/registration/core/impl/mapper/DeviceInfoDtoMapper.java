@@ -10,11 +10,11 @@ import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
 
 @Mapper
 public interface DeviceInfoDtoMapper {
-    DeviceInfoDto toDto(BarrierEntity barrierEntity);
-
     DeviceInfoDto toDto(RfidDeviceEntity barrierEntity);
 
     DeviceInfoDto toDto(CardEntity cardEntity);
 
     DeviceInfoDto toDto(QrEntity qrEntity);
+
+    DeviceInfoDto toDto(BarrierEntity qrEntity);
 }
