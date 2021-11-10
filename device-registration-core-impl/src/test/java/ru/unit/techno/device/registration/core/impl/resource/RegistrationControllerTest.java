@@ -55,7 +55,8 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void retryRegistrationTest() {
         var input = buildRegisterDtoTwoDevices();
 
-        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+        var groupIdFromBody = 228L;
+        testUtils.invokePostApi(Void.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
         assertEquals(all.size(), 1);
@@ -74,7 +75,8 @@ public class RegistrationControllerTest extends BaseTestClass {
         //пушим с новым устройством
         var inputThreeDevice = buildRegisterDtoThreeDevices().setGroup(groupIdFromBody);
 
-        var groupIdFromRetry = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
+        var groupIdFromRetry = 322L;
+        testUtils.invokePostApi(Void.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
 
         List<GroupsEntity> afterRetry = groupsRepository.findAll();
         assertEquals(afterRetry.size(), 1);
@@ -92,7 +94,8 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void registrationWithExistedGroupAfterCoreCrashTest() {
         var input = buildRegisterDtoTwoDevices();
 
-        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+        var groupIdFromBody = 228L;
+        testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
         assertEquals(all.size(), 1);
@@ -111,7 +114,8 @@ public class RegistrationControllerTest extends BaseTestClass {
         //пушим с новым устройством
         var inputThreeDevice = buildRegisterDtoThreeDevices();
 
-        var groupIdFromRetry = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
+        var groupIdFromRetry = 228L;
+        testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
 
         List<GroupsEntity> afterRetry = groupsRepository.findAll();
         assertEquals(afterRetry.size(), 1);
@@ -128,7 +132,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     }
 
     @Test
-    public void registerTwoIdentityDevices(){
+    public void registerTwoIdentityDevices() {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
             barrierRepository.save(new BarrierEntity().setDeviceId(123L).setType(DeviceType.ENTRY));
             barrierRepository.save(new BarrierEntity().setDeviceId(123L).setType(DeviceType.ENTRY));
@@ -153,7 +157,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     private RegistrationDto buildRegisterDtoTwoDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
-                .setGroup(null)
+                .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
                                 .setType("RFID"),
@@ -165,7 +169,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     private RegistrationDto buildRegisterDtoThreeDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
-                .setGroup(null)
+                .setGroup(322L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
                                 .setType("RFID"),

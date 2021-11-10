@@ -19,7 +19,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createUser(@RequestBody RegistrationDto registrationDto) {
-        return registrationService.registerGroup(registrationDto);
+    public void createUser(@RequestBody RegistrationDto registrationDto) {
+        registrationService.registerGroup(registrationDto);
     }
 }

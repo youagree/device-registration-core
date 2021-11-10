@@ -28,7 +28,7 @@ public class RegistrationService {
     private final BarrierRepository barrierRepository;
 
     @Transactional
-    public Long registerGroup(RegistrationDto registrationDto) {
+    public void registerGroup(RegistrationDto registrationDto) {
         GroupsEntity groupsEntity;
         //TODO Проверить были ли регистрирующиеся устройства в какой либо группе
 
@@ -37,23 +37,27 @@ public class RegistrationService {
             if (existedGroup != null) {
                 groupsEntity = groupsRepository.findByGroupId(existedGroup);
             } else {
-                groupsEntity = new GroupsEntity();
-                groupsEntity.setGroupId(generateRandomGroupId());
+                throw new IllegalArgumentException("A group belonging to these devices was not found and the group ID in the request is null");
             }
         } else {
             groupsEntity = groupsRepository.findByGroupId(registrationDto.getGroup());
+            if (groupsEntity == null) {
+                groupsEntity = new GroupsEntity()
+                        .setAddress(registrationDto.getAddress())
+                        .setGroupId(registrationDto.getGroup());
+
+                groupsRepository.save(groupsEntity);
+            }
+
+            if (!CollectionUtils.isEmpty(registrationDto.getGroups())) {
+                parseRegistrationRequestAndSaveDevices(registrationDto.getGroups(), groupsEntity);
+            } else {
+                throw new IllegalArgumentException("Cant register devices if devices count is 0");
+            }
         }
 
         groupsEntity.setAddress(registrationDto.getAddress());
         groupsRepository.saveAndFlush(groupsEntity);
-
-        if (!CollectionUtils.isEmpty(registrationDto.getGroups())) {
-            parseRegistrationRequestAndSaveDevices(registrationDto.getGroups(), groupsEntity);
-        } else {
-            throw new IllegalArgumentException("Cant register devices if devices count is 0");
-        }
-
-        return groupsEntity.getGroupId();
     }
 
     private Long findRegisteredDevices(List<DeviceDto> devices) {
@@ -81,17 +85,6 @@ public class RegistrationService {
         }
 
         return groupId;
-    }
-
-    private Long generateRandomGroupId() {
-        Random random = new Random();
-        long id = random.nextLong();
-// TODO: 08.07.2021
-//        if (groupsRepository.isGroupExist(id)) {
-//            return generateRandomGroupId();
-//        } else {
-        return id;
-//        }
     }
 
     private void parseRegistrationRequestAndSaveDevices(List<DeviceDto> devices, GroupsEntity groupId) {

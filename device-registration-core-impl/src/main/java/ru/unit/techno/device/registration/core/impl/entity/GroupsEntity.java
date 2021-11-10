@@ -13,12 +13,9 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "groups")
-@SequenceGenerator(name = "squd_group_id_seq", sequenceName = "squd_group_id_seq")
 public class GroupsEntity {
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "squd_group_id_seq")
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private Long groupId;
     @Column(name = "address")
