@@ -46,7 +46,7 @@ public class RegistrationService {
                         .setAddress(registrationDto.getAddress())
                         .setGroupId(registrationDto.getGroup());
 
-                groupsRepository.save(groupsEntity);
+                groupsRepository.saveAndFlush(groupsEntity);
             }
 
             if (!CollectionUtils.isEmpty(registrationDto.getGroups())) {
@@ -105,7 +105,7 @@ public class RegistrationService {
                         BarrierEntity barrierEntity = new BarrierEntity();
                         barrierEntity.setDeviceId(deviceDto.getId())
                                 .setGroup(groupId)
-                                .setType(DeviceType.RFID);
+                                .setType(DeviceType.ENTRY);
                         barrierRepository.save(barrierEntity);
                     }
                     break;
@@ -123,6 +123,7 @@ public class RegistrationService {
     }
 
     private boolean checkBarrierDevice(Long deviceId) {
+        /// TODO: 10.11.2021 разобраться че за хуйня
         BarrierEntity byDeviceId = barrierRepository.findByDeviceId(deviceId);
         if (byDeviceId != null) {
             log.info("This device is already registered in service");

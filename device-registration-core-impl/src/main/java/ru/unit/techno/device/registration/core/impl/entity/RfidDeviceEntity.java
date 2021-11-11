@@ -20,7 +20,6 @@ public class RfidDeviceEntity {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private DeviceType type;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private GroupsEntity group;

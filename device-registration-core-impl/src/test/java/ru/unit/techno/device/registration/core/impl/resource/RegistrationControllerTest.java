@@ -33,7 +33,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void successRegistrationTest() {
         var input = buildRegisterDtoTwoDevices();
 
-        var groupIdFromBody = testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
+        testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
         assertEquals(all.size(), 1);
@@ -47,7 +47,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         RfidDeviceEntity rfidEntity = rfidDevicesRepository.findByGroup_GroupId(groupId);
         assertEquals(rfidEntity.getDeviceId(), 1L);
 
-        assertEquals(groupIdFromBody, groupsEntity.getGroupId());
+        assertEquals(input.getGroup(), groupsEntity.getGroupId());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         //пушим с новым устройством
         var inputThreeDevice = buildRegisterDtoThreeDevices().setGroup(groupIdFromBody);
 
-        var groupIdFromRetry = 322L;
+        var groupIdFromRetry = 228L;
         testUtils.invokePostApi(Void.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
 
         List<GroupsEntity> afterRetry = groupsRepository.findAll();
@@ -169,7 +169,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     private RegistrationDto buildRegisterDtoThreeDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
-                .setGroup(322L)
+                .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
                                 .setType("RFID"),
