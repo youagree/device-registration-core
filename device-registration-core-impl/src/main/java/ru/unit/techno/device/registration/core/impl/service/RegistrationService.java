@@ -123,7 +123,6 @@ public class RegistrationService {
     }
 
     private boolean checkBarrierDevice(Long deviceId) {
-        /// TODO: 10.11.2021 разобраться че за хуйня
         BarrierEntity byDeviceId = barrierRepository.findByDeviceId(deviceId);
         if (byDeviceId != null) {
             log.info("This device is already registered in service");
