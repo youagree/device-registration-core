@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Table(name = "groups")
 public class GroupsEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private Long groupId;
     @Column(name = "address")
