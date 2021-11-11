@@ -129,7 +129,7 @@ public class RegistrationService {
                         QrEntity qrEntity = new QrEntity();
                         qrEntity.setDeviceId(deviceDto.getId())
                                 .setGroup(groupId)
-                                .setType(DeviceType.ENTRY);
+                                .setType(DeviceType.QR);
                         qrRepository.save(qrEntity);
                     }
                     break;
@@ -139,7 +139,7 @@ public class RegistrationService {
                         CardEntity cardEntity = new CardEntity();
                         cardEntity.setDeviceId(deviceDto.getId())
                                 .setGroup(groupId)
-                                .setType(DeviceType.ENTRY);
+                                .setType(DeviceType.CARD);
                         cardRepository.save(cardEntity);
                     }
                     break;
