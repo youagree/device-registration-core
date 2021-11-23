@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.unit.techno.device.registration.api.dto.RegistrationDto;
 import ru.unit.techno.device.registration.core.impl.service.RegistrationService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -19,7 +21,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody RegistrationDto registrationDto) {
+    public void createUser(@RequestBody @Valid RegistrationDto registrationDto) {
         registrationService.registerGroup(registrationDto);
     }
 }
