@@ -160,10 +160,10 @@ public class RegistrationControllerTest extends BaseTestClass {
                 .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
-                                .setType("RFID"),
+                                .setType(DeviceType.RFID),
                         new DeviceDto()
                                 .setId(2L)
-                                .setType("ENTRY")));
+                                .setType(DeviceType.ENTRY)));
     }
 
     private RegistrationDto buildRegisterDtoThreeDevices() {
@@ -172,12 +172,12 @@ public class RegistrationControllerTest extends BaseTestClass {
                 .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
-                                .setType("RFID"),
+                                .setType(DeviceType.RFID),
                         new DeviceDto()
                                 .setId(2L)
-                                .setType("ENTRY"),
+                                .setType(DeviceType.ENTRY),
                         new DeviceDto()
                                 .setId(3L)
-                                .setType("ENTRY")));
+                                .setType(DeviceType.ENTRY)));
     }
 }

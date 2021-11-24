@@ -12,7 +12,6 @@ import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.repository.*;
 
 import java.util.List;
-import java.util.Random;
 
 @Slf4j
 @Service
@@ -62,7 +61,8 @@ public class RegistrationService {
 
         for (DeviceDto dev : devices) {
             /// TODO: 11.11.2021 Мб как то унифицировать функционал кейсов, чтобы 4 почти одинаковых кейса обрабатывать. Мб через дженерики, хз
-            switch (dev.getType()) {
+            String deviceType = dev.getType().getValue();
+            switch (deviceType) {
                 case ("RFID"):
                     RfidDeviceEntity existRfid = rfidDevicesRepository.findByDeviceId(dev.getId());
                     if (existRfid != null) {
@@ -103,7 +103,8 @@ public class RegistrationService {
     private void parseRegistrationRequestAndSaveDevices(List<DeviceDto> devices, GroupsEntity groupId) {
 
         for (DeviceDto deviceDto : devices) {
-            switch (deviceDto.getType()) {
+            String deviceType = deviceDto.getType().getValue();
+            switch (deviceType) {
                 case ("RFID"):
                     if (!checkRfidDevice(deviceDto.getId())) {
                         RfidDeviceEntity rfidEntity = new RfidDeviceEntity();
