@@ -52,6 +52,8 @@ public class DeviceService {
                 break;
             case CARD:
                 groupId = cardRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+            case ENTRY:
+                groupId = barrierRepository.findByDeviceId(deviceId).getGroup().getGroupId();
         }
 
         if (groupId != null) {
