@@ -1,18 +1,19 @@
 package ru.unit.techno.device.registration.core.impl.resource;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
+import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
 import ru.unit.techno.device.registration.api.dto.GroupsDto;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.base.BaseTestClass;
 import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
 import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
+import ru.unit.techno.device.registration.core.impl.enums.RfidSubType;
 
 public class DeviceResourceTest extends BaseTestClass {
 
@@ -28,7 +29,7 @@ public class DeviceResourceTest extends BaseTestClass {
                 .setGroupId(7777L)
                 .setAddress("Jopa"));
 
-        rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(123L).setGroup(gr1).setType(DeviceType.RFID));
+        rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(123L).setGroup(gr1).setType(DeviceType.RFID).setRfidSubType(RfidSubType.TABLE_READER));
         barrierRepository.save(new BarrierEntity().setDeviceId(456L).setGroup(gr1).setType(DeviceType.ENTRY));
 
         rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(789L).setGroup(gr2).setType(DeviceType.RFID));
@@ -40,7 +41,19 @@ public class DeviceResourceTest extends BaseTestClass {
     public void getAllGroupsTest() {
         String url = BASE_URL + "/all";
 
-        var result = testUtils.invokeGetApi(new ParameterizedTypeReference<GroupsDto>() {}, url, HttpStatus.OK);
+        var result = testUtils.invokeGetApi(new ParameterizedTypeReference<GroupsDto>() {
+        }, url, HttpStatus.OK);
         Assertions.assertEquals(result.getGroupDtoList().size(), 2);
+    }
+
+    @Test
+    @DisplayName("Получение настольного ридера")
+    public void getReaderDeviceId() {
+        String url = "/api/device/find/tableReader";
+
+        var result = testUtils.invokeGetApi(new ParameterizedTypeReference<DeviceResponseDto>() {
+        }, url, HttpStatus.OK);
+
+        Assertions.assertEquals(result.getDeviceId(), 123L);
     }
 }

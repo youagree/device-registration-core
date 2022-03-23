@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import ru.unit.techno.device.registration.api.dto.DeviceDto;
 import ru.unit.techno.device.registration.api.dto.RegistrationDto;
-import ru.unit.techno.device.registration.core.impl.entity.*;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
+import ru.unit.techno.device.registration.core.impl.entity.*;
+import ru.unit.techno.device.registration.core.impl.enums.RfidSubType;
 import ru.unit.techno.device.registration.core.impl.repository.*;
 
 import java.util.List;
@@ -104,13 +105,20 @@ public class RegistrationService {
 
         for (DeviceDto deviceDto : devices) {
             String deviceType = deviceDto.getType().getValue();
+
+            String deviceSubType = "UNKNOWN";
+            if (deviceDto.getSubType() != null) {
+                deviceSubType = deviceDto.getSubType().getValue();
+            }
+
             switch (deviceType) {
                 case ("RFID"):
                     if (!checkRfidDevice(deviceDto.getId())) {
                         RfidDeviceEntity rfidEntity = new RfidDeviceEntity();
                         rfidEntity.setDeviceId(deviceDto.getId())
                                 .setGroup(groupId)
-                                .setType(DeviceType.RFID);
+                                .setType(DeviceType.RFID)
+                                .setRfidSubType(RfidSubType.valueOf(deviceSubType));
                         rfidDevicesRepository.save(rfidEntity);
                     }
                     break;

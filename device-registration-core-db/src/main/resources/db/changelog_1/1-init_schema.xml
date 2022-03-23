@@ -73,6 +73,7 @@
             </column>
             <column name="type" type="VARCHAR"/>
             <column name="group_id" type="BIGINT"/>
+            <column name="sub_type" type="VARCHAR"/>
         </createTable>
     </changeSet>
 
