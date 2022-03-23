@@ -2,6 +2,7 @@ package ru.unit.techno.device.registration.core.impl.entity;
 
 import lombok.Data;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
+import ru.unit.techno.device.registration.core.impl.enums.RfidSubType;
 
 import javax.persistence.*;
 
@@ -23,4 +24,8 @@ public class RfidDeviceEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private GroupsEntity group;
+    @Column(name = "sub_type")
+    @Enumerated(EnumType.STRING)
+    private RfidSubType rfidSubType;
 }
+

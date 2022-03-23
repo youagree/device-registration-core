@@ -8,18 +8,11 @@ import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
 import ru.unit.techno.device.registration.api.dto.GroupDto;
 import ru.unit.techno.device.registration.api.dto.GroupsDto;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
-import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
-import ru.unit.techno.device.registration.core.impl.entity.CardEntity;
-import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
-import ru.unit.techno.device.registration.core.impl.entity.QrEntity;
-import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
+import ru.unit.techno.device.registration.core.impl.entity.*;
+import ru.unit.techno.device.registration.core.impl.enums.RfidSubType;
 import ru.unit.techno.device.registration.core.impl.mapper.DeviceInfoDtoMapper;
 import ru.unit.techno.device.registration.core.impl.mapper.GroupsDtoMapper;
-import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
-import ru.unit.techno.device.registration.core.impl.repository.CardRepository;
-import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
-import ru.unit.techno.device.registration.core.impl.repository.QrRepository;
-import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
+import ru.unit.techno.device.registration.core.impl.repository.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,6 +59,17 @@ public class DeviceService {
         }
 
         return null;
+    }
+
+    public DeviceResponseDto getReaderDeviceId() {
+        var group = rfidDevicesRepository.findByRfidSubType(RfidSubType.TABLE_READER).getGroup();
+        var deviceId = rfidDevicesRepository.findByRfidSubType(RfidSubType.TABLE_READER).getDeviceId();
+
+
+        return new DeviceResponseDto()
+                .setDeviceId(deviceId)
+                .setType("RFID")
+                .setEntryAddress(group.getAddress());
     }
 
     @Transactional
