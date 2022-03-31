@@ -5,7 +5,7 @@ import lombok.Getter;
 public enum RfidSubType {
     TABLE_READER("TABLE_READER"),
     ENTRY_READER("ENTRY_READER"),
-    UNKNOWN("");
+    UNKNOWN("UNKNOWN");
 
     @Getter
     private final String value;

@@ -1,24 +1,23 @@
 
 package ru.unit.techno.device.registration.core.impl.resource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import ru.unit.techno.device.registration.api.dto.DeviceDto;
 import ru.unit.techno.device.registration.api.dto.RegistrationDto;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
+import ru.unit.techno.device.registration.api.enums.SubType;
 import ru.unit.techno.device.registration.core.impl.base.BaseTestClass;
 import ru.unit.techno.device.registration.core.impl.entity.*;
 import ru.unit.techno.device.registration.core.impl.service.RegistrationService;
 
-import java.sql.SQLException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegistrationControllerTest extends BaseTestClass {
 
@@ -160,10 +159,12 @@ public class RegistrationControllerTest extends BaseTestClass {
                 .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
-                                .setType(DeviceType.RFID),
+                                .setType(DeviceType.RFID)
+                                .setSubType(SubType.UNKNOWN),
                         new DeviceDto()
                                 .setId(2L)
-                                .setType(DeviceType.ENTRY)));
+                                .setType(DeviceType.ENTRY)
+                                .setSubType(SubType.UNKNOWN)));
     }
 
     private RegistrationDto buildRegisterDtoThreeDevices() {
@@ -172,12 +173,15 @@ public class RegistrationControllerTest extends BaseTestClass {
                 .setGroup(228L)
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
-                                .setType(DeviceType.RFID),
+                                .setType(DeviceType.RFID)
+                                .setSubType(SubType.UNKNOWN),
                         new DeviceDto()
                                 .setId(2L)
-                                .setType(DeviceType.ENTRY),
+                                .setType(DeviceType.ENTRY)
+                                .setSubType(SubType.UNKNOWN),
                         new DeviceDto()
                                 .setId(3L)
-                                .setType(DeviceType.ENTRY)));
+                                .setType(DeviceType.ENTRY)
+                                .setSubType(SubType.UNKNOWN)));
     }
 }
