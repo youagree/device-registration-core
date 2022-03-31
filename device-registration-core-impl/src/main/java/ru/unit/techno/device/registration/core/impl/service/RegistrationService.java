@@ -106,7 +106,7 @@ public class RegistrationService {
         for (DeviceDto deviceDto : devices) {
             String deviceType = deviceDto.getType().getValue();
 
-            String deviceSubType = "UNKNOWN";
+            String deviceSubType = "";
             if (deviceDto.getSubType() != null) {
                 deviceSubType = deviceDto.getSubType().getValue();
             }

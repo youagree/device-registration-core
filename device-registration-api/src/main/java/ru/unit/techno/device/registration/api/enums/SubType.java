@@ -4,7 +4,8 @@ import lombok.Getter;
 
 public enum SubType {
     TABLE_READER("ENTRY_READER"),
-    ENTRY_READER("ENTRY_READER");
+    ENTRY_READER("ENTRY_READER"),
+    UNKNOWN("");
 
     @Getter
     private final String value;
