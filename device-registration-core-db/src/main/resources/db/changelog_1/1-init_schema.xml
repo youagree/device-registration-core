@@ -44,7 +44,9 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="VARCHAR"/>
+            <column name="group_id" type="VARCHAR">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -72,7 +74,9 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="VARCHAR"/>
+            <column name="group_id" type="VARCHAR">
+                <constraints unique="true"/>
+            </column>
             <column name="sub_type" type="VARCHAR"/>
         </createTable>
     </changeSet>
@@ -101,7 +105,9 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="VARCHAR"/>
+            <column name="group_id" type="VARCHAR">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -129,7 +135,9 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="VARCHAR"/>
+            <column name="group_id" type="VARCHAR">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 

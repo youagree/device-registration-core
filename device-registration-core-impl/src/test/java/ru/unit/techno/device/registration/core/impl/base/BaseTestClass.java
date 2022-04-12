@@ -62,6 +62,8 @@ public class BaseTestClass {
     public void destroy() {
         barrierRepository.deleteAll();
         rfidDevicesRepository.deleteAll();
+        cardRepository.deleteAll();
+        qrRepository.deleteAll();
         groupsRepository.deleteAll();
     }
 }
