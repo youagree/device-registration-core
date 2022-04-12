@@ -31,7 +31,7 @@ public class RegistrationService {
         //TODO Проверить были ли регистрирующиеся устройства в какой либо группе
 
         if (registrationDto.getGroup() == null) {
-            Long existedGroup = findRegisteredDevices(registrationDto.getGroups());
+            String existedGroup = findRegisteredDevices(registrationDto.getGroups());
             if (existedGroup != null) {
                 groupsEntity = groupsRepository.findByGroupId(existedGroup);
             } else {
@@ -57,8 +57,8 @@ public class RegistrationService {
         groupsRepository.saveAndFlush(groupsEntity);
     }
 
-    private Long findRegisteredDevices(List<DeviceDto> devices) {
-        Long groupId = null;
+    private String findRegisteredDevices(List<DeviceDto> devices) {
+        String groupId = null;
 
         for (DeviceDto dev : devices) {
             /// TODO: 11.11.2021 Мб как то унифицировать функционал кейсов, чтобы 4 почти одинаковых кейса обрабатывать. Мб через дженерики, хз

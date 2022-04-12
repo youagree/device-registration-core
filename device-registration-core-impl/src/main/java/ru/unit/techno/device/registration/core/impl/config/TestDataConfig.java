@@ -49,7 +49,7 @@ public class TestDataConfig {
         var group1 = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("unknown")
-                        .setGroupId(1L)
+                        .setGroupId("1L")
         );
 
         rfidDevicesRepository.save(
@@ -85,7 +85,7 @@ public class TestDataConfig {
         var group2 = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("unknown")
-                        .setGroupId(2L)
+                        .setGroupId("2L")
         );
 
         barrierRepository.save(new BarrierEntity()
@@ -97,7 +97,7 @@ public class TestDataConfig {
         var group3 = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("unknown")
-                        .setGroupId(3L)
+                        .setGroupId("3L")
         );
 
         rfidDevicesRepository.save(
@@ -125,7 +125,7 @@ public class TestDataConfig {
         var group4 = groupsRepository.save(
                 new GroupsEntity()
                         .setAddress("unknown")
-                        .setGroupId(4L)
+                        .setGroupId("4L")
         );
 
         rfidDevicesRepository.save(

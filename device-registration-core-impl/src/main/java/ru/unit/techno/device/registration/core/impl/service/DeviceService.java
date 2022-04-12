@@ -34,7 +34,7 @@ public class DeviceService {
 
     @Transactional
     public DeviceResponseDto getGroupDevices(Long deviceId, DeviceType deviceType) {
-        Long groupId = null;
+        String groupId = null;
 
         switch (deviceType) {
             case QR:
@@ -45,8 +45,10 @@ public class DeviceService {
                 break;
             case CARD:
                 groupId = cardRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
             case ENTRY:
                 groupId = barrierRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
         }
 
         if (groupId != null) {

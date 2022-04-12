@@ -12,7 +12,7 @@
         </preConditions>
 
         <createTable tableName="groups">
-            <column name="group_id" type="BIGINT">
+            <column name="group_id" type="VARCHAR">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="address" type="VARCHAR"/>
@@ -44,7 +44,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="BIGINT"/>
+            <column name="group_id" type="VARCHAR"/>
         </createTable>
     </changeSet>
 
@@ -72,7 +72,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="BIGINT"/>
+            <column name="group_id" type="VARCHAR"/>
             <column name="sub_type" type="VARCHAR"/>
         </createTable>
     </changeSet>
@@ -101,7 +101,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="BIGINT"/>
+            <column name="group_id" type="VARCHAR"/>
         </createTable>
     </changeSet>
 
@@ -129,7 +129,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="type" type="VARCHAR"/>
-            <column name="group_id" type="BIGINT"/>
+            <column name="group_id" type="VARCHAR"/>
         </createTable>
     </changeSet>
 

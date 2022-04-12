@@ -10,6 +10,6 @@ public class RegistrationDto {
 
     @NotBlank
     private String address;
-    private Long group;
+    private String group;
     private List<DeviceDto> groups;
 }

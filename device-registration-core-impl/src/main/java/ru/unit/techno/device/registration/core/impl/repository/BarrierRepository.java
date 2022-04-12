@@ -9,7 +9,7 @@ public interface BarrierRepository extends JpaRepository<BarrierEntity, Long> {
 
     BarrierEntity findByDeviceId(Long deviceId);
 
-    BarrierEntity findByGroup_GroupId(Long id);
+    BarrierEntity findByGroup_GroupId(String id);
 
-    List<BarrierEntity> findAllByGroup_GroupId(Long id);
+    List<BarrierEntity> findAllByGroup_GroupId(String id);
 }

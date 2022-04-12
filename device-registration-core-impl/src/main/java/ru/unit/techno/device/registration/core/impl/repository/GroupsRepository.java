@@ -10,5 +10,5 @@ public interface GroupsRepository extends JpaRepository<GroupsEntity, Long> {
     @Query("select g from GroupsEntity g where g.groupId = :groupId")
     boolean isGroupExist(@Param("groupId") Long groupId);
 
-    GroupsEntity findByGroupId(Long groupId);
+    GroupsEntity findByGroupId(String groupId);
 }

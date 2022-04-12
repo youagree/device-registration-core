@@ -6,7 +6,7 @@ import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
 import ru.unit.techno.device.registration.core.impl.entity.CardEntity;
 
 public interface CardRepository extends JpaRepository<CardEntity, Long> {
-    CardEntity findByGroup_GroupId(Long id);
+    CardEntity findByGroup_GroupId(String id);
 
     CardEntity findByDeviceId(Long deviceId);
 }

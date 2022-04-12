@@ -22,11 +22,11 @@ public class DeviceResourceTest extends BaseTestClass {
     @BeforeEach
     public void initData() {
         GroupsEntity gr1 = groupsRepository.save(new GroupsEntity()
-                .setGroupId(5555L)
+                .setGroupId("5555L")
                 .setAddress("Zalupa"));
 
         GroupsEntity gr2 = groupsRepository.save(new GroupsEntity()
-                .setGroupId(7777L)
+                .setGroupId("7777L")
                 .setAddress("Jopa"));
 
         rfidDevicesRepository.save(new RfidDeviceEntity().setDeviceId(123L).setGroup(gr1).setType(DeviceType.RFID).setRfidSubType(RfidSubType.TABLE_READER));

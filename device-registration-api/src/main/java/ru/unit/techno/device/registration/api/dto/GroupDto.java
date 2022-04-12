@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 public class GroupDto {
-    private Long groupId;
+    private String groupId;
     private List<DeviceInfoDto> deviceInfoDtoList;
 }

@@ -54,7 +54,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void retryRegistrationTest() {
         var input = buildRegisterDtoTwoDevices();
 
-        var groupIdFromBody = 228L;
+        var groupIdFromBody = "228L";
         testUtils.invokePostApi(Void.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
@@ -74,7 +74,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         //пушим с новым устройством
         var inputThreeDevice = buildRegisterDtoThreeDevices().setGroup(groupIdFromBody);
 
-        var groupIdFromRetry = 228L;
+        var groupIdFromRetry = "228L";
         testUtils.invokePostApi(Void.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
 
         List<GroupsEntity> afterRetry = groupsRepository.findAll();
@@ -93,7 +93,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     public void registrationWithExistedGroupAfterCoreCrashTest() {
         var input = buildRegisterDtoTwoDevices();
 
-        var groupIdFromBody = 228L;
+        var groupIdFromBody = "228L";
         testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, input);
 
         List<GroupsEntity> all = groupsRepository.findAll();
@@ -113,7 +113,7 @@ public class RegistrationControllerTest extends BaseTestClass {
         //пушим с новым устройством
         var inputThreeDevice = buildRegisterDtoThreeDevices();
 
-        var groupIdFromRetry = 228L;
+        var groupIdFromRetry = "228L";
         testUtils.invokePostApi(Long.class, BASE_URL + REGISTER, HttpStatus.CREATED, inputThreeDevice);
 
         List<GroupsEntity> afterRetry = groupsRepository.findAll();
@@ -156,7 +156,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     private RegistrationDto buildRegisterDtoTwoDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
-                .setGroup(228L)
+                .setGroup("228L")
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
                                 .setType(DeviceType.RFID)
@@ -170,7 +170,7 @@ public class RegistrationControllerTest extends BaseTestClass {
     private RegistrationDto buildRegisterDtoThreeDevices() {
         return new RegistrationDto()
                 .setAddress("127.0.0.1")
-                .setGroup(228L)
+                .setGroup("228L")
                 .setGroups(List.of(new DeviceDto()
                                 .setId(1L)
                                 .setType(DeviceType.RFID)

@@ -10,9 +10,9 @@ public interface RfidDevicesRepository extends JpaRepository<RfidDeviceEntity, L
 
     RfidDeviceEntity findByDeviceId(Long deviceId);
 
-    RfidDeviceEntity findByGroup_GroupId(Long id);
+    RfidDeviceEntity findByGroup_GroupId(String id);
 
-    List<RfidDeviceEntity> findAllByGroup_GroupId(Long id);
+    List<RfidDeviceEntity> findAllByGroup_GroupId(String id);
 
     RfidDeviceEntity findByRfidSubType(RfidSubType rfidSubType);
 }
