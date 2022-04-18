@@ -96,6 +96,13 @@ public class DeviceService {
         return new GroupsDto().setGroupDtoList(groupDtos);
     }
 
+    @Transactional
+    public void linkToTag(String tagId, String groupId) {
+        GroupsEntity groupsEntity = groupsRepository.findByGroupId(groupId);
+        groupsEntity.setTagId(tagId);
+        groupsRepository.save(groupsEntity);
+    }
+
     //todo сделать получше
     private DeviceInfoDto checkTypeAndMap(Object o) {
         DeviceInfoDto deviceInfoDto = null;

@@ -7,16 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
-import ru.unit.techno.device.registration.core.impl.entity.BarrierEntity;
-import ru.unit.techno.device.registration.core.impl.entity.CardEntity;
-import ru.unit.techno.device.registration.core.impl.entity.GroupsEntity;
-import ru.unit.techno.device.registration.core.impl.entity.QrEntity;
-import ru.unit.techno.device.registration.core.impl.entity.RfidDeviceEntity;
-import ru.unit.techno.device.registration.core.impl.repository.BarrierRepository;
-import ru.unit.techno.device.registration.core.impl.repository.CardRepository;
-import ru.unit.techno.device.registration.core.impl.repository.GroupsRepository;
-import ru.unit.techno.device.registration.core.impl.repository.QrRepository;
-import ru.unit.techno.device.registration.core.impl.repository.RfidDevicesRepository;
+import ru.unit.techno.device.registration.core.impl.entity.*;
+import ru.unit.techno.device.registration.core.impl.repository.*;
 
 import javax.persistence.EntityManager;
 
@@ -50,6 +42,7 @@ public class TestDataConfig {
                 new GroupsEntity()
                         .setAddress("unknown")
                         .setGroupId("1L")
+                        .setTagId("first_tag")
         );
 
         rfidDevicesRepository.save(
@@ -86,6 +79,7 @@ public class TestDataConfig {
                 new GroupsEntity()
                         .setAddress("unknown")
                         .setGroupId("2L")
+                        .setTagId("second_tag")
         );
 
         barrierRepository.save(new BarrierEntity()
@@ -98,6 +92,7 @@ public class TestDataConfig {
                 new GroupsEntity()
                         .setAddress("unknown")
                         .setGroupId("3L")
+                        .setTagId("third_tag")
         );
 
         rfidDevicesRepository.save(
@@ -126,6 +121,7 @@ public class TestDataConfig {
                 new GroupsEntity()
                         .setAddress("unknown")
                         .setGroupId("4L")
+                        .setTagId("fourth_tag")
         );
 
         rfidDevicesRepository.save(

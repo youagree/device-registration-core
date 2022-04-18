@@ -22,4 +22,12 @@ public class DeviceStorageResource {
     public DeviceResponseDto getReaderDeviceId() {
         return deviceService.getReaderDeviceId();
     }
+
+    @PostMapping("/link-tag-id")
+    public void linkGroupToTag(
+            @RequestParam("tagId") String tagId,
+            @RequestParam("groupId") String groupId
+    ) {
+        deviceService.linkToTag(tagId, groupId);
+    }
 }

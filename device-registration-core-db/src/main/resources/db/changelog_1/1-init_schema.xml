@@ -16,6 +16,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="address" type="VARCHAR"/>
+            <column name="tag_id" type="VARCHAR"/>
         </createTable>
     </changeSet>
 
