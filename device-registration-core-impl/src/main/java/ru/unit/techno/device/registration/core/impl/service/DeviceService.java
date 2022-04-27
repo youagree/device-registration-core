@@ -3,10 +3,7 @@ package ru.unit.techno.device.registration.core.impl.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.unit.techno.device.registration.api.dto.DeviceInfoDto;
-import ru.unit.techno.device.registration.api.dto.DeviceResponseDto;
-import ru.unit.techno.device.registration.api.dto.GroupDto;
-import ru.unit.techno.device.registration.api.dto.GroupsDto;
+import ru.unit.techno.device.registration.api.dto.*;
 import ru.unit.techno.device.registration.api.enums.DeviceType;
 import ru.unit.techno.device.registration.core.impl.entity.*;
 import ru.unit.techno.device.registration.core.impl.enums.RfidSubType;
@@ -34,22 +31,7 @@ public class DeviceService {
 
     @Transactional
     public DeviceResponseDto getGroupDevices(Long deviceId, DeviceType deviceType) {
-        String groupId = null;
-
-        switch (deviceType) {
-            case QR:
-                groupId = qrRepository.findByDeviceId(deviceId).getGroup().getGroupId();
-                break;
-            case RFID:
-                groupId = rfidDevicesRepository.findByDeviceId(deviceId).getGroup().getGroupId();
-                break;
-            case CARD:
-                groupId = cardRepository.findByDeviceId(deviceId).getGroup().getGroupId();
-                break;
-            case ENTRY:
-                groupId = barrierRepository.findByDeviceId(deviceId).getGroup().getGroupId();
-                break;
-        }
+        String groupId = findGroupId(deviceId, deviceType);
 
         if (groupId != null) {
             //todo barrier inside group
@@ -61,6 +43,24 @@ public class DeviceService {
         }
 
         return null;
+    }
+
+    public DeviceSourceTargetDto findTargetDevice(Long deviceId, DeviceType source, DeviceType target) {
+        String groupId = findGroupId(deviceId, source);
+
+        GroupsDto allGroupsWithDevices = getAllGroupsWithDevices();
+        List<DeviceInfoDto> deviceInfoDtos = allGroupsWithDevices.getGroupDtoList()
+                .stream()
+                .filter(groupDto -> groupDto.getGroupId().equals(groupId))
+                .findFirst()
+                .map(GroupDto::getDeviceInfoDtoList).orElseThrow();
+
+        return deviceInfoDtos
+                .stream()
+                .filter(device -> device.getType().equals(target))
+                .map(deviceInfoDtoMapper::toTarget)
+                .findFirst()
+                .orElseThrow();
     }
 
     public DeviceResponseDto getReaderDeviceId() {
@@ -120,5 +120,26 @@ public class DeviceService {
             deviceInfoDto = deviceInfoDtoMapper.toDto(cardEntity);
         }
         return deviceInfoDto;
+    }
+
+    private String findGroupId(Long deviceId, DeviceType deviceType) {
+        String groupId = null;
+
+        switch (deviceType) {
+            case QR:
+                groupId = qrRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+            case RFID:
+                groupId = rfidDevicesRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+            case CARD:
+                groupId = cardRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+            case ENTRY:
+                groupId = barrierRepository.findByDeviceId(deviceId).getGroup().getGroupId();
+                break;
+        }
+
+        return groupId;
     }
 }
